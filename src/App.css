@@ -1,0 +1,34 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.stopwatch {
+  font-size: 6rem;
+  font-family: monospace;
+  font-weight: bold;
+  margin: 2rem 0;
+  color: #000;
+}
+
+.instructions {
+  color: #888;
+  margin-top: 2rem;
+}
+
+kbd {
+  background-color: #333;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: monospace;
+  border: 1px solid #555;
+}

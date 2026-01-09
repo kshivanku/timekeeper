@@ -1,7 +1,11 @@
+/* Reset root styles for full page layout */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   text-align: center;
+  overflow: hidden;
 }
 
 .container {
@@ -10,25 +14,295 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 100vw;
+  position: relative;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* Dark Mode Styles */
+.container.dark {
+  background: radial-gradient(circle at 50% 10%, #2a2a2a, #000000);
+  color: white;
+}
+
+/* Light Mode Styles */
+.container.light {
+  background: radial-gradient(circle at 50% 10%, #f0f0f0, #e0e0e0);
+  color: #1a1a1a;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.container.light .theme-toggle {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+}
+
+.container.light .theme-toggle svg {
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.container.dark .theme-toggle {
+  color: #fbbf24;
+}
+
+/* Glassmorphism Base Class */
+.glass-panel {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 2rem;
+  transition: all 0.5s ease;
+}
+
+/* Dark Mode Glass */
+.container.dark .glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  color: white;
+}
+
+/* Light Mode Glass */
+.container.light .glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
+}
+
+/* Bottom Controls Bar */
+.bottom-controls {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  position: absolute;
+  bottom: 12%; 
+  z-index: 10;
+  width: auto;
+  max-width: 80%;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 200px;
+}
+
+.control-group label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  transition: color 0.5s ease;
+}
+
+.container.dark .control-group label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.container.light .control-group label {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Glass Slider */
+.glass-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.8;
+  transition: opacity 0.2s, background 0.5s ease;
+}
+
+.glass-slider:hover {
+  opacity: 1;
+}
+
+.container.dark .glass-slider {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.container.light .glass-slider {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.glass-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  transition: background 0.5s ease;
+}
+
+.container.dark .glass-slider::-webkit-slider-thumb {
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.container.light .glass-slider::-webkit-slider-thumb {
+  background: #1a1a1a;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Timer Container (Circular Progress) */
+.timer-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 80px;
+  transition: opacity 0.3s ease;
+}
+
+.timer-container.paused {
+  opacity: 0.5;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progress-ring__circle-bg {
+  transition: stroke 0.5s ease;
+}
+
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.35s, stroke 0.5s ease;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  stroke-linecap: round;
+}
+
+.container.dark .progress-ring__circle {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+.container.light .progress-ring__circle {
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.2));
+}
+
+.timer-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  width: 100%;
+  text-align: center;
+}
+
+.phase-indicator {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 300;
+  transition: color 0.5s ease;
+}
+
+.container.dark .phase-indicator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.container.light .phase-indicator {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .stopwatch {
-  font-size: 6rem;
-  font-family: monospace;
-  font-weight: bold;
-  margin: 2rem 0;
-  color: #000;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', 'Source Code Pro', monospace;
+  font-weight: 200;
+  transition: color 0.5s ease;
+  line-height: 1;
 }
 
+.container.dark .stopwatch {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.container.light .stopwatch {
+  color: #1a1a1a;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Instructions */
 .instructions {
-  color: #888;
-  margin-top: 2rem;
+  position: absolute;
+  bottom: 3%;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: color 0.5s ease;
+}
+
+.container.dark .instructions {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.container.light .instructions {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 kbd {
-  background-color: #333;
-  border-radius: 4px;
-  padding: 2px 6px;
-  font-family: monospace;
-  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-family: inherit;
+  transition: all 0.5s ease;
+}
+
+.container.dark kbd {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.container.light kbd {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.7);
 }
